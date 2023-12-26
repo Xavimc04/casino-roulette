@@ -1,9 +1,10 @@
-import { Register } from "@/types/auth/types";
-
 export function registryValidation(
-    state: Register
-) {
-    const { name, email, password, password_confirmation } = state;
+    form: FormData
+) { 
+    const name = form.get('name');
+    const email = form.get('email');
+    const password = form.get('password');
+    const password_confirmation = form.get('password_confirmation');
 
     if (!name) {
         return {
@@ -19,7 +20,7 @@ export function registryValidation(
         }
     }
 
-    if (!email.includes('@')) {
+    if (!String(email).includes('@')) {
         return {
             isValid: false,
             message: 'Email must be valid'
@@ -33,7 +34,7 @@ export function registryValidation(
         }
     }
 
-    if(password.length < 8) {
+    if(String(password).length < 8) {
         return {
             isValid: false,
             message: 'Password must be at least 8 characters'

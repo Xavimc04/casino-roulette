@@ -1,25 +1,21 @@
 'use client'
 
-import { useReducer, useState } from "react";
-import reducer from "@/lib/reducers/auth.reducer"; 
+import { FormEvent, useState } from "react"; 
 import { registryValidation } from '@/services/auth/register.service'
 import LabeledInput from "@/components/labeled-input";
 
 export default function Page() {
-    const [state, dispatch] = useReducer(reducer, {
-        name: "", 
-        email: "",
-        password: "",
-        password_confirmation: ""
-    });
-
     const [error, handleError] = useState<string>(''); 
 
-    const handleSubmit = () => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); 
+
+        const data = new FormData(event.currentTarget);
+
         const {
             isValid, 
             message
-        } = registryValidation(state);
+        } = registryValidation(data);
 
         if(!isValid) handleError(message)
     }
@@ -37,61 +33,50 @@ export default function Page() {
             </small>
         }
 
-        <LabeledInput
-            label="Name"
-            icon="person"
-            type="text"
-            value={ state.name }
-            change={(value: string) => dispatch({
-                type: "SET_NAME", 
-                payload: value
-            })}
-        />
-
-        <LabeledInput 
-            label="Email"
-            icon="mail"
-            type="email"
-            value={ state.email }
-            change={(value: string) => dispatch({
-                type: "SET_EMAIL", 
-                payload: value
-            })}
-        />
-
-        <LabeledInput
-            label="Password"
-            icon="key"
-            type="password"
-            value={ state.password }
-            change={(value: string) => dispatch({
-                type: "SET_PASSWORD", 
-                payload: value
-            })}
-        /> 
-
-        <LabeledInput
-            label="Confirm password"
-            icon="key"
-            type="password"
-            value={ state.password_confirmation }
-            change={(value: string) => dispatch({
-                type: "SET_PASSWORD_CONFIRMATION", 
-                payload: value
-            })}
-        />
-
-        <small
-            className="text-xs text-gray-400 mb-3 text-end"
+        <form
+            onSubmit={ handleSubmit }
+            className="flex flex-col gap-2"
         >
-            Already have an account? <a href="/auth/login" className="text-indigo-500">Login</a>
-        </small>
+            <LabeledInput
+                label="Name"
+                icon="person"
+                name="name"
+                type="text"
+            />
 
-        <button
-            className="bg-indigo-500 text-white text-sm py-2 rounded-sm focus:outline-none focus:ring-0 transition-all hover:bg-indigo-600"
-            onClick={() => handleSubmit()}
-        >
-            Complete register
-        </button>
+            <LabeledInput 
+                label="Email"
+                icon="mail"
+                name="email"
+                type="email"
+            />
+
+            <LabeledInput
+                label="Password"
+                icon="key"
+                name="password"
+                type="password"
+            /> 
+
+            <LabeledInput
+                label="Confirm password"
+                icon="key"
+                name="confirm_password"
+                type="password"
+            />
+
+            <small
+                className="text-xs text-gray-400 mb-3 text-end"
+            >
+                Already have an account? <a href="/auth/login" className="text-indigo-500">Login</a>
+            </small>
+
+            <button
+                type="submit"
+                className="bg-indigo-500 text-white text-sm py-2 rounded-sm focus:outline-none focus:ring-0 transition-all hover:bg-indigo-600" 
+            >
+                Complete register
+            </button>
+        </form>
     </main>
 }
