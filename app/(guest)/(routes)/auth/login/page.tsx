@@ -1,7 +1,7 @@
 'use client'
 
 import { FormEvent, useState } from "react"; 
-import { registryValidation } from '@/services/auth/validation.service'
+import { loginValidation } from '@/services/auth/validation.service'
 import LabeledInput from "@/components/labeled-input"; 
 import instance from "@/lib/instance";
 import { useRouter } from 'next/navigation';
@@ -18,15 +18,15 @@ export default function Page() {
         const {
             isValid, 
             message
-        } = registryValidation(data); 
+        } = loginValidation(data); 
 
         if(!isValid) return handleError(message)
 
         try {
-            const response = await instance.post('/api/auth/register', data) 
+            const response = await instance.post('/api/auth/login', data) 
 
             if(response.status === 200) {
-                router.push('/auth/login')
+                router.push('/')
             }
         } catch (error: any) {  
             if (error.response && error.response.status != 200) { 
@@ -56,13 +56,6 @@ export default function Page() {
             onSubmit={ handleSubmit }
             className="flex flex-col gap-2"
         >
-            <LabeledInput
-                label="Name"
-                icon="person"
-                name="name"
-                type="text"
-            />
-
             <LabeledInput 
                 label="Email"
                 icon="mail"
@@ -75,26 +68,19 @@ export default function Page() {
                 icon="key"
                 name="password"
                 type="password"
-            /> 
-
-            <LabeledInput
-                label="Confirm password"
-                icon="key"
-                name="password_confirmation"
-                type="password"
-            />
+            />  
 
             <small
                 className="text-xs text-gray-400 mb-3 text-end"
             >
-                Already have an account? <a href="/auth/login" className="text-indigo-500">Login</a>
+                Doesn't have an account? <a href="/auth/register" className="text-indigo-500">Register</a>
             </small>
 
             <button
                 type="submit"
                 className="bg-indigo-500 text-white text-sm py-2 rounded-sm focus:outline-none focus:ring-0 transition-all hover:bg-indigo-600" 
             >
-                Complete register
+                Login
             </button>
         </form>
     </main>

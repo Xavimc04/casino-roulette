@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server' 
 import prisma from '@/lib/prisma';
-import { registryValidation } from '@/services/auth/register.service'
+import { registryValidation } from '@/services/auth/validation.service'
 import { Register } from '@/types/auth/types';
 import { doesEmailExist } from '@/services/auth/api.service';
 import { encrypt } from '@/utils/encryption';

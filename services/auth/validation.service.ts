@@ -1,4 +1,4 @@
-import { Register } from "@/types/auth/types";
+import { Login, Register } from "@/types/auth/types";
 
 export function registryValidation(
     form: FormData | Register
@@ -63,6 +63,46 @@ export function registryValidation(
         return {
             isValid: false,
             message: 'Password and password confirmation must match'
+        }
+    }
+
+    return {
+        isValid: true,
+        message: 'All fields are valid'
+    }
+}
+
+export function loginValidation(
+    form: FormData | Login
+) {
+    let email, password;
+
+    if(form instanceof FormData) {
+        email = form.get('email');
+        password = form.get('password');
+    } else {
+        email = form.email;
+        password = form.password;
+    }
+
+    if (!email) {
+        return {
+            isValid: false,
+            message: 'Email is required'
+        }
+    }
+
+    if (!String(email).includes('@')) {
+        return {
+            isValid: false,
+            message: 'Email must be valid'
+        }
+    }
+
+    if (!password) {
+        return {
+            isValid: false,
+            message: 'Password is required'
         }
     }
 
