@@ -2,10 +2,13 @@
 
 import { FormEvent, useState } from "react"; 
 import { registryValidation } from '@/services/auth/register.service'
-import LabeledInput from "@/components/labeled-input";
+import LabeledInput from "@/components/labeled-input"; 
+import instance from "@/lib/instance";
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
-    const [error, handleError] = useState<string>(''); 
+    const [error, handleError] = useState<string>('');
+    const router = useRouter();
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault(); 
@@ -15,9 +18,25 @@ export default function Page() {
         const {
             isValid, 
             message
-        } = registryValidation(data);
+        } = registryValidation(data); 
 
-        if(!isValid) handleError(message)
+        if(!isValid) return handleError(message)
+
+        try {
+            const response = await instance.post('/api/auth/register', data) 
+
+            if(response.status === 200) {
+                router.push('/auth/login')
+            }
+        } catch (error: any) {  
+            if (error.response && error.response.status != 200) { 
+                const errorData = error.response.data;
+
+                handleError(errorData.message);
+            } else { 
+                handleError((error as Error).message);
+            }
+        }
     }
 
     return <main className="w-[350px] flex flex-col gap-2">
@@ -61,7 +80,7 @@ export default function Page() {
             <LabeledInput
                 label="Confirm password"
                 icon="key"
-                name="confirm_password"
+                name="password_confirmation"
                 type="password"
             />
 

@@ -1,10 +1,21 @@
+import { Register } from "@/types/auth/types";
+
 export function registryValidation(
-    form: FormData
+    form: FormData | Register
 ) { 
-    const name = form.get('name');
-    const email = form.get('email');
-    const password = form.get('password');
-    const password_confirmation = form.get('password_confirmation');
+    let name, email, password, password_confirmation;
+
+    if(form instanceof FormData) {
+        name = form.get('name');
+        email = form.get('email');
+        password = form.get('password');
+        password_confirmation = form.get('password_confirmation');
+    } else {
+        name = form.name;
+        email = form.email;
+        password = form.password;
+        password_confirmation = form.password_confirmation;
+    }
 
     if (!name) {
         return {
