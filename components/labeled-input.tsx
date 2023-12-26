@@ -3,13 +3,15 @@ export default function LabeledInput({
     icon, 
     type, 
     value, 
-    change
+    change, 
+    name
 } : {
     label?: string, 
     icon?: string, 
     type?: string, 
     value?: any,
-    change?: (e: any) => void
+    change?: (e: any) => void, 
+    name?: string
 }) {
     return <label className="flex flex-col gap-2 mb-3 text-gray-400 cursor-pointer">
         <span className="text-xs">
@@ -28,6 +30,7 @@ export default function LabeledInput({
             <input 
                 type={ type || "text" }
                 value={ value }
+                name={ name }
                 className="bg-transparent focus:outline-none focus:ring-0 flex-1"
                 onChange={ e => change && change(e.target.value)}
             />
