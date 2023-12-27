@@ -2,16 +2,11 @@ import instance from "@/lib/instance";
 
 export async function getUser() {
     try {
-        instance.get('/api/user')
-            .then(response => {
-                if(response.status != 200) return false; 
+        const response = await instance.get('/api/user');
 
-                console.log(response.data); 
+        if(response.status !== 200) return false;
 
-                return response.data; 
-            }).catch(error => {
-                return false;      
-            });
+        return response.data;
     } catch (error) {
         return false; 
     }
