@@ -24,10 +24,18 @@ export async function isAuthenticated(req: Request) {
             new TextEncoder().encode(getJwtSecretKey())
         )
 
-        if(verified) return true; 
+        if(verified) return verified; 
 
         return false 
     } catch (err) {
         return false
     }
+}
+
+export async function getUserIdentifier(req: Request) {
+    const allowed = await isAuthenticated(req);
+
+    if (!allowed) return false;
+
+    return allowed?.payload?.id || null; 
 }
