@@ -14,14 +14,13 @@
     "bcryptjs": "^2.4.3",
     "cookies-next": "^4.1.0",
     "formidable": "^3.5.1",
-    "jsonwebtoken": "^9.0.2",
+    "jose": "^5.2.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

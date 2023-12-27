@@ -2,9 +2,10 @@ import { loginValidation } from "@/services/auth/validation.service";
 import { Login } from "@/types/auth/types";
 import { NextResponse } from "next/server"; 
 import prisma from "@/lib/prisma";
-import { compareEncryption } from "@/utils/encryption";
-import jwt from 'jsonwebtoken';
+import { compareEncryption } from "@/utils/encryption"; 
 import { setCookie } from "cookies-next";
+import { SignJWT } from 'jose'
+import { getJwtSecretKey } from "@/lib/auth/jwt-secret";
 
 export const config = {
     api: {
@@ -45,12 +46,14 @@ export async function POST(
                 }, { status: 400 });
             }
 
-            const token = jwt.sign({
+            const token = await new SignJWT({
                 id: user.id,
                 email: user.email
-            }, process.env.JWT_SECRET as string, {
-                expiresIn: '1h'
-            });
+            })
+                .setProtectedHeader({ alg: 'HS256' })
+                .setIssuedAt()
+                .setExpirationTime('1h')
+                .sign(new TextEncoder().encode(getJwtSecretKey()))
 
             const res = new NextResponse(
                 JSON.stringify({ message: 'Logged in successfully' }), 
