@@ -9,6 +9,8 @@ export default async function middleware(req: NextRequest) {
             return NextResponse.next();
         }
         
-        return NextResponse.redirect(new URL('/', req.url).toString());
+        return NextResponse.redirect(new URL('/', req.url).toString(), {
+            status: 401
+        });
     }
 }
