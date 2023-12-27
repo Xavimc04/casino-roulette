@@ -7,9 +7,7 @@ export async function GET(
 ) {
     const userId = await getUserIdentifier(req);
 
-    if(!userId) return NextResponse.redirect('/login', {
-        status: 401
-    });
+    if(!userId) return NextResponse.redirect('/login');
 
     const user = await prisma.user.findUnique({
         where: {
