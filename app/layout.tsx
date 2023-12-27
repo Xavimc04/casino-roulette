@@ -22,7 +22,7 @@ export default function RootLayout({
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
             </head>
 
-            <body className={ `bg-gray-900 flex flex-col w-screen h-screen overflow-y-scroll overflow-x-hidden ${ inter.className }` }>
+            <body className={ `bg-slate-950 flex flex-col w-screen h-screen overflow-y-scroll overflow-x-hidden ${ inter.className }` }>
                 { children }
             </body>
         </html>

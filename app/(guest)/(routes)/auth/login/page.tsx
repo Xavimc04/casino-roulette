@@ -39,7 +39,7 @@ export default function Page() {
         }
     }
 
-    return <main className="w-[350px] flex flex-col gap-2">
+    return <main className="w-[350px] flex flex-col gap-2 z-30">
         <h2 className="text-4xl text-indigo-500 font-extrabold">Eurovegas</h2>
 
         <small className="mb-3">
