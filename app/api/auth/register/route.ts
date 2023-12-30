@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import { registryValidation } from '@/services/auth/validation.service'
 import { Register } from '@/types/auth/types';
 import { doesEmailExist } from '@/services/auth/api.service';
-import { encrypt } from '@/utils/encryption';
+import { encrypt } from '@/lib/encryption';
 
 export const config = {
     api: {

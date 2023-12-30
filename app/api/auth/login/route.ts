@@ -2,7 +2,7 @@ import { loginValidation } from "@/services/auth/validation.service";
 import { Login } from "@/types/auth/types";
 import { NextResponse } from "next/server"; 
 import prisma from "@/lib/prisma";
-import { compareEncryption } from "@/utils/encryption"; 
+import { compareEncryption } from "@/lib/encryption"; 
 import { setCookie } from "cookies-next";
 import { SignJWT } from 'jose'
 import { getJwtSecretKey } from "@/lib/auth/jwt-secret";
