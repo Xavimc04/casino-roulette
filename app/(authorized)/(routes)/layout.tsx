@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Session } from '@/types/auth/types'
 import { getUser } from '@/services/user.service'
 import Spinner from '@/components/spinner'
+import Sidebar from "@/components/sidebar"
 
 export default function AuthorizedLayout({
     children
@@ -34,7 +35,7 @@ export default function AuthorizedLayout({
     }
 
     return <main
-        className="flex-1 flex items-center justify-center flex-col gap-3 text-white"
+        className="flex flex-col h-screen items-start p-4 gap-4"
     >
         <SessionContext.Provider
             value={{
@@ -43,8 +44,12 @@ export default function AuthorizedLayout({
             }}
         > 
             <Navigator />
-    
-            { children }
+
+            <div className="flex-1 flex text-white w-full gap-5">
+                <Sidebar />
+
+                { children }
+            </div>
         </SessionContext.Provider>
     </main>
 }
