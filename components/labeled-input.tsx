@@ -4,14 +4,16 @@ export default function LabeledInput({
     type, 
     value, 
     change, 
-    name
+    name, 
+    disabled
 } : {
     label?: string, 
     icon?: string, 
     type?: string, 
     value?: any,
     change?: (e: any) => void, 
-    name?: string
+    name?: string,
+    disabled?: boolean
 }) {
     return <label className="flex flex-col gap-2 mb-3 text-gray-400 cursor-pointer">
         <span className="text-xs">
@@ -31,6 +33,7 @@ export default function LabeledInput({
                 type={ type || "text" }
                 value={ value }
                 name={ name }
+                disabled={ disabled || false }
                 className="bg-transparent focus:outline-none focus:ring-0 flex-1"
                 onChange={ e => change && change(e.target.value)}
             />

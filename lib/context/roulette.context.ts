@@ -1,16 +1,18 @@
+import { RouletteContextProps } from "@/types/casino/types";
 import { createContext } from "react";
 
 export const defaultState = {
-    state: null, 
+    joined: false,
+    users: [],
+    history: [], 
+    bet: [],
+    betAmount: 0.5, 
+    betId: 0, 
+    betStatus: "Pending", 
+    betResult: false
+}
+
+export const RouletteContext = createContext<RouletteContextProps>({
+    state: defaultState, 
     dispatch: () => {}
-}
-
-interface Context {
-    state: any, 
-    dispatch: (dispatch: {
-        type: string, 
-        payload: any
-    }) => void
-}
-
-export const RouletteContext = createContext<Context>(defaultState)
+})

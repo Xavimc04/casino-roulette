@@ -51,7 +51,7 @@ export async function POST(
             })
                 .setProtectedHeader({ alg: 'HS256' })
                 .setIssuedAt()
-                .setExpirationTime('1h')
+                .setExpirationTime('4h')
                 .sign(new TextEncoder().encode(getJwtSecretKey()))
 
             const res = new NextResponse(
@@ -62,7 +62,7 @@ export async function POST(
             setCookie('auth-token', token, {
                 req, 
                 res, 
-                maxAge: 1800000,
+                maxAge: 1000 * 60 * 40,
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict'
